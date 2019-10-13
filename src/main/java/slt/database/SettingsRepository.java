@@ -10,7 +10,6 @@ import slt.database.entities.Setting;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +44,8 @@ public class SettingsRepository {
         Setting currentSetting = getValidSetting(userId, setting.getName(), setting.getDay());
         if (currentSetting == null) { // geen records
             log.debug("Insert");
+            // new settings cant have id's. clear it:
+            setting.setId(null);
             saveSetting(userId, setting);
         } else {
             log.debug("Update");
@@ -65,22 +66,22 @@ public class SettingsRepository {
 
     @Transactional
     public void deleteAllForUser(Integer userId, String name) {
-        settingsCrudRepository.deleteAllByUserIdAndName(userId,name);
+        settingsCrudRepository.deleteAllByUserIdAndName(userId, name);
     }
 
     public Setting getLatestSetting(Integer userId, String setting) {
         List<Setting> byUserIdAndName = settingsCrudRepository.findByUserIdAndNameOrderByDayDesc(userId, setting);
-        log.trace("Number of hits for setting {} :{}", setting, byUserIdAndName.size());
+        log.debug("Number of hits for setting {}: {}", setting, byUserIdAndName.size());
         return byUserIdAndName.isEmpty() ? null : byUserIdAndName.get(0);
     }
 
     public Setting getValidSetting(Integer userId, String setting, Date date) {
         List<Setting> byUserIdAndNameWithDayBeforeDay = settingsCrudRepository.findByUserIdAndNameWithDayBeforeDay(userId, setting, date);
-        log.trace("Number of hits for setting on or before date {} :{}", setting, byUserIdAndNameWithDayBeforeDay.size());
+        log.debug("Number of hits for setting on or before date {}: {}", setting, byUserIdAndNameWithDayBeforeDay.size());
 
         if (byUserIdAndNameWithDayBeforeDay.isEmpty()) {
             List<Setting> byUserIdAndNameWithDayAfterDay = settingsCrudRepository.findByUserIdAndNameWithDayAfterDay(userId, setting, date);
-            log.trace("Number of hits for setting on or after date {} :{}", setting, byUserIdAndNameWithDayAfterDay.size());
+            log.debug("Number of hits for setting on or after date {}: {}", setting, byUserIdAndNameWithDayAfterDay.size());
             return byUserIdAndNameWithDayAfterDay.isEmpty() ? null : byUserIdAndNameWithDayAfterDay.get(0);
         } else {
             return byUserIdAndNameWithDayBeforeDay.get(0);
@@ -95,8 +96,9 @@ public class SettingsRepository {
         settingDomain.setUserId(userId);
         settingsCrudRepository.save(settingDomain);
     }
+
     public Optional<Setting> findByKeyValue(String name, String value) {
-        return settingsCrudRepository.findByNameAndValue(name,value);
+        return settingsCrudRepository.findByNameAndValue(name, value);
     }
 }
 

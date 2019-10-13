@@ -90,7 +90,7 @@ public class SettingsService {
             return ResponseEntity.ok(syncedAccount);
         }
     }
-    @ApiOperation(value = "Store  connectivity settings")
+    @ApiOperation(value = "Store connectivity settings")
     @PostMapping(path = "/connectivity/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SyncedAccount> storeConnectivitySetting(@RequestBody SettingDto code) {
         UserInfo userInfo = ThreadLocalHolder.getThreadLocal().get();
@@ -99,7 +99,7 @@ public class SettingsService {
     }
 
 
-    @ApiOperation(value = "Disconnect connectivity settings")
+    @ApiOperation(value = "Disconnect from platform")
     @DeleteMapping(path = "/connectivity/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SyncedAccount> disConnectConnectivitySetting(@PathVariable("name") String name) {
         UserInfo userInfo = ThreadLocalHolder.getThreadLocal().get();

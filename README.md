@@ -1,15 +1,11 @@
 README
 
-Simple Java Servlet by CSL
-Using Spring Boot and Maven
-
-application.properties defines port for localhost
+application.yaml defines port for localhost
 
 To start app:
->mvnw.cmd spring-boot:run
+> mvnw.cmd spring-boot:run
 or if you have Maven installed:
 >mvn spring-boot:run
-
 
 > Setup database
  in windows ODBC aanmaken met user zoals in application.properties

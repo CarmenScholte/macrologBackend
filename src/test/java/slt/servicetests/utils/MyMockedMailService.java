@@ -1,20 +1,24 @@
 package slt.servicetests.utils;
 
-import slt.config.MailConfig;
+import slt.config.GoogleConfig;
+import slt.connectivity.google.GoogleClient;
+import slt.database.SettingsRepository;
 import slt.database.entities.UserAccount;
-import slt.notification.MailService;
+import slt.service.GoogleMailService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MyMockedMailService extends MailService {
+public class MyMockedMailService extends GoogleMailService {
 
     private HashMap<String,String> resetPasswords = new HashMap<>();
     private List<String> confirmationMailsSend = new ArrayList<>();
 
-    public MyMockedMailService(MailConfig mailConfig) {
-        super(mailConfig);
+    public MyMockedMailService(SettingsRepository settingsRepository,
+                               GoogleConfig googleConfig,
+                               GoogleClient googleClient){
+        super(settingsRepository,googleConfig,googleClient);
     }
 
     @Override

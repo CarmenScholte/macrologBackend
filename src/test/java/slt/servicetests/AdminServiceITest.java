@@ -39,6 +39,5 @@ public class AdminServiceITest extends AbstractApplicationIntegrationTest {
         ResponseEntity<List<UserAccountDto>> allUsers = adminService.getAllUsers();
         assertThat(allUsers.getBody()).isNull();
         assertThat(allUsers.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-
     }
 }

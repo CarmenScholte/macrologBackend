@@ -21,7 +21,7 @@ public class MailConfig {
     private String port;
 
     @PostConstruct
-    public void configGeladen() {
-        log.info("Mail geladen " + host);
+    public void configLoaded() {
+        log.info("Mail configured " + host);
     }
 }

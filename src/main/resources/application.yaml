@@ -39,6 +39,12 @@ strava:
   verify-token: ${strava.verifytoken}
   callback-url: $(strava.callbackurl}
 
+google:
+  client-id: ${google.client.id}
+  client-secret: ${google.client.secret}
+  redirect-uri: ${google.redirect.uri}
+  application-name: ${google.application.name}
+
 ---
 spring:
   profiles: arjan
@@ -53,6 +59,13 @@ strava:
   callback-url: http://localhost:9090/webhooks/strava
   client-id: 37498
   client-secret: 0b2f817309329fb716e368b3dbd3614f922f20f80
+
+google:
+  client-id: 164533152729-b643nsgk4q03hffifnvd8v8m6rvupk28.apps.googleusercontent.com
+  client-secret: uit
+  redirect-uri: https://localhost:4200/admin/mail
+  application-name: Macrolog-localhost
+
 
 mail:
    username: doethetniet@gmail.com
@@ -71,6 +84,12 @@ strava:
   client-secret: 0b2f817309329fb716e368b3dbd3614f922f20f8
   verify-token: uit
   callback-url: http://localhost:9090/webhooks/strava
+
+google:
+  client-id: 164533152729-b643nsgk4q03hffifnvd8v8m6rvupk28.apps.googleusercontent.com
+  client-secret: uit
+  redirect-uri: http://localhost:4200/admin/mail
+  application-name: Macrolog-localhost
 
 mail:
    username: doethetniet@gmail.com
@@ -103,6 +122,12 @@ strava:
 mail:
    username: doethetnietp@gmail.com
    password: 'doethetniet'
+
+google:
+  client-id: 164533152729-b643nsgk4q03hffifnvd8v8m6rvupk28.apps.googleusercontent.com
+  client-secret: uit
+  redirect-uri: http://localhost:4200/admin/mail
+  application-name: Macrolog-localhost
 
 #logging:
 #  level:

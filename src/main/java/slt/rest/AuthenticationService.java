@@ -14,9 +14,9 @@ import slt.database.SettingsRepository;
 import slt.database.UserAccountRepository;
 import slt.database.entities.UserAccount;
 import slt.dto.*;
-import slt.notification.MailService;
 import slt.security.ThreadLocalHolder;
 import slt.security.UserInfo;
+import slt.service.GoogleMailService;
 import slt.util.JWTBuilder;
 import slt.util.PasswordUtils;
 
@@ -34,7 +34,7 @@ public class AuthenticationService {
     private SettingsRepository settingsRepository;
 
     @Autowired
-    private MailService mailService;
+    private GoogleMailService mailService;
 
     @Autowired
     private AccountService accountService;

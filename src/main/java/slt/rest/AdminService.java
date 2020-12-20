@@ -9,10 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import slt.database.UserAccountRepository;
 import slt.database.entities.UserAccount;
+import slt.dto.ConnectivityRequestDto;
+import slt.dto.ConnectivityStatusDto;
+import slt.dto.MailRequestDto;
 import slt.dto.UserAccountDto;
 import slt.security.ThreadLocalHolder;
 import slt.security.UserInfo;
+import slt.service.GoogleMailService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +31,12 @@ public class AdminService {
 
     @Autowired
     private UserAccountRepository userAccountRepository;
+
+    @Autowired
+    private GoogleMailService mailService;
+
+    @Autowired
+    private GoogleMailService notificationMails;
 
 
     @GetMapping(path = "/getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,6 +71,48 @@ public class AdminService {
             return new ResponseEntity((HttpStatus.BAD_REQUEST));
         } else {
             accountService.deleteAccount(deleteUserId);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(path = "/mail/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConnectivityStatusDto> getMailStatus() {
+        UserInfo userInfo = ThreadLocalHolder.getThreadLocal().get();
+        Integer userId = userInfo.getUserId();
+        UserAccount userAccount = userAccountRepository.getUserById(userId);
+        if (!userAccount.isAdmin()) {
+            log.error("Not authorized to get mail config");
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        } else {
+            return ResponseEntity.ok(mailService.getMailStatus());
+        }
+    }
+
+    @PostMapping(path = "/mail", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity storeMailSetting(@RequestBody ConnectivityRequestDto connectivityRequestDto) {
+        UserInfo userInfo = ThreadLocalHolder.getThreadLocal().get();
+        Integer userId = userInfo.getUserId();
+        UserAccount userAccount = userAccountRepository.getUserById(userId);
+        if (!userAccount.isAdmin()) {
+            log.error("Not authorized to store mail settings");
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        } else {
+            log.debug("Handling connectivity request ");
+            mailService.registerWithCode(connectivityRequestDto.getClientAuthorizationCode());
+            return new ResponseEntity(HttpStatus.OK);
+        }
+    }
+    @PostMapping(path = "/mail/testmail", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity sendTestMail(@RequestBody MailRequestDto mailRequest) {
+        UserInfo userInfo = ThreadLocalHolder.getThreadLocal().get();
+        Integer userId = userInfo.getUserId();
+        UserAccount userAccount = userAccountRepository.getUserById(userId);
+        if (!userAccount.isAdmin()) {
+            log.error("Not authorized to send testmail");
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        } else {
+            log.debug("Sending mail to  " + mailRequest.getEmailTo());
+            mailService.sendTestMail(mailRequest.getEmailTo());
             return new ResponseEntity(HttpStatus.OK);
         }
     }

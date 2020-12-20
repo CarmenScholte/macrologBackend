@@ -60,7 +60,7 @@ public class StravaClient {
 
         String clientId = stravaConfig.getClientId().toString();
         String clientSecret = stravaConfig.getClientSecret();
-        Map reqPayload = new HashMap();
+        Map<String,String> reqPayload = new HashMap();
         reqPayload.put(CLIENT_ID, clientId);
         reqPayload.put(CLIENT_SECRET, clientSecret);
         reqPayload.put("code", authorizationCode);
@@ -70,7 +70,7 @@ public class StravaClient {
 
     }
 
-    private StravaToken getStravaToken(Map reqPayload) {
+    private StravaToken getStravaToken(Map<String,String> reqPayload) {
         try {
             final HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -96,7 +96,7 @@ public class StravaClient {
         String clientId = stravaConfig.getClientId().toString();
         String clientSecret = stravaConfig.getClientSecret();
 
-        Map reqPayload = new HashMap();
+        Map<String,String> reqPayload = new HashMap();
         reqPayload.put(CLIENT_ID, clientId);
         reqPayload.put(CLIENT_SECRET, clientSecret);
         reqPayload.put("refresh_token", refreshToken);

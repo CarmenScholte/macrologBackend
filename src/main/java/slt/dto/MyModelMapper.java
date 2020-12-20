@@ -1,6 +1,5 @@
 package slt.dto;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.*;
 import org.modelmapper.convention.MatchingStrategies;
@@ -26,12 +25,10 @@ public class MyModelMapper {
     @Autowired
     PortionRepository portionRepository;
 
-    private ModelMapper configuredMapper;
-
+    private final ModelMapper configuredMapper;
 
     public org.modelmapper.ModelMapper getConfiguredMapper() {
         return configuredMapper;
-
     }
 
     public MyModelMapper(){
@@ -245,13 +242,13 @@ public class MyModelMapper {
     }
 
     private void addLocalDateSqlDate(ModelMapper modelMapper) {
-        Provider<LocalDate> localDateProvider = new AbstractProvider<LocalDate>() {
+        Provider<LocalDate> localDateProvider = new AbstractProvider<>() {
             @Override
             protected LocalDate get() {
                 return LocalDate.now();
             }
         };
-        Converter<Date, LocalDate> toLocalDateConverter = new AbstractConverter<Date, LocalDate>() {
+        Converter<Date, LocalDate> toLocalDateConverter = new AbstractConverter<>() {
             protected LocalDate convert(Date source) {
                 return source.toLocalDate();
             }
@@ -263,14 +260,14 @@ public class MyModelMapper {
     }
 
     private void addSqlDateLocalDate(ModelMapper modelMapper) {
-        Provider<Date> sqlDateProvider = new AbstractProvider<Date>() {
+        Provider<Date> sqlDateProvider = new AbstractProvider<>() {
             @Override
             protected Date get() {
                 return Date.valueOf(LocalDate.now());
             }
         };
 
-        Converter<LocalDate, Date> toSqlDateConverter = new AbstractConverter<LocalDate, Date>() {
+        Converter<LocalDate, Date> toSqlDateConverter = new AbstractConverter<>() {
             protected Date convert(LocalDate source) {
                 return Date.valueOf(source);
             }

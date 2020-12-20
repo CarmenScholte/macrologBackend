@@ -1,0 +1,23 @@
+databaseChangeLog:
+
+- changeSet:
+    id: 20191021-addsystemuser
+    author: arjan
+    changes:
+    - insert:
+        tableName: useraccounts
+        columns:
+        - column:
+            name: id
+            value: -1
+        - column:
+            name: username
+            value: system
+        - column:
+            name: password
+            value: dummy
+        - column:
+            name: email
+            value: dummy
+
+

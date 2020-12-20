@@ -13,16 +13,18 @@ import javax.annotation.PostConstruct;
 @Data
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("strava")
-public class StravaConfig {
+@ConfigurationProperties("google")
+public class GoogleConfig {
 
-    private Integer clientId;
+    private String clientId;
     private String clientSecret;
-    private String verifytoken;
-    private String callbackUrl;
+    private String redirectUri;
+    private String applicationName;
+
 
     @PostConstruct
     public void configLoaded() {
-        log.info("Strava configured : {}", StringUtils.isNotEmpty(clientSecret));
+        log.info("{} Google configured : {}", applicationName, StringUtils.isNotEmpty(clientSecret));
     }
+
 }

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import slt.notification.MailService;
+import slt.service.GoogleMailService;
 
 @Profile("test")
 @Configuration
@@ -14,8 +14,8 @@ public class IntegrationConfiguration {
 
     @Bean
     @Primary
-    public MailService mailService() {
+    public GoogleMailService mailService() {
         log.debug("Creating mock mail service");
-        return new MyMockedMailService(null);
+        return new MyMockedMailService(null,null,null);
     }
 }

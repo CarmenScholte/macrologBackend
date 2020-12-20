@@ -20,7 +20,7 @@ public class DatabaseConfig {
     private String password;
 
     @PostConstruct
-    public void configGeladen() {
-        log.info("Database geladen " + username);
+    public void configLoaded() {
+        log.info("Database configured " + username);
     }
 }

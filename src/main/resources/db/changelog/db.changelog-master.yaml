@@ -24,3 +24,6 @@ databaseChangeLog:
 
    - include:
        file: db/changelog/20190805-mealtodish.yaml
+
+   - include:
+       file: db/changelog/20191021-systemuser.yaml

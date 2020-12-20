@@ -16,11 +16,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.Assert;
 import slt.Application;
 import slt.dto.*;
-import slt.notification.MailService;
 import slt.rest.*;
 import slt.security.SecurityConstants;
 import slt.security.ThreadLocalHolder;
 import slt.security.UserInfo;
+import slt.service.GoogleMailService;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class AbstractApplicationIntegrationTest {
 
     @Autowired
-    protected MailService mailService;
+    protected GoogleMailService mailService;
 
     @Autowired
     protected ActivityService activityService;

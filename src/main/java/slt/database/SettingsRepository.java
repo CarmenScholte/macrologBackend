@@ -92,9 +92,9 @@ public class SettingsRepository {
         return settingsCrudRepository.findByUserIdOrderByDayDesc(userId);
     }
 
-    public void saveSetting(Integer userId, Setting settingDomain) {
+    public Setting saveSetting(Integer userId, Setting settingDomain) {
         settingDomain.setUserId(userId);
-        settingsCrudRepository.save(settingDomain);
+        return settingsCrudRepository.save(settingDomain);
     }
 
     public Optional<Setting> findByKeyValue(String name, String value) {

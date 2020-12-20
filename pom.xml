@@ -24,6 +24,9 @@
         <sonar.java.binaries>target/classes</sonar.java.binaries>
         <java.version>11</java.version>
         <junit.jupiter.version>5.5.1</junit.jupiter.version>
+
+        <project.http.version>1.23.0</project.http.version>
+        <project.oauth.version>1.23.0</project.oauth.version>
     </properties>
 
     <!-- Add typical dependencies for a web application -->
@@ -54,7 +57,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
+            <version>1.18.16</version>
             <scope>provided</scope>
         </dependency>
 
@@ -62,7 +65,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.11</version>
+            <version>8.0.16</version>
         </dependency>
 
         <!--swagger-->
@@ -158,6 +161,31 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+        </dependency>
+
+        <!-- GMail Api usage -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.30.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client-jetty -->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.30.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-gmail -->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-gmail</artifactId>
+            <version>v1-rev105-1.25.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-oauth2-http</artifactId>
+            <version>0.17.1</version>
         </dependency>
 
     </dependencies>

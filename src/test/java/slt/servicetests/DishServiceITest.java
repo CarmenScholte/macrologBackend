@@ -36,7 +36,7 @@ public class DishServiceITest extends AbstractApplicationIntegrationTest {
     }
 
     @Test
-    public void testCreateAndDeleteEmptyDish(){
+    public void testCreateAndDeleteEmptyDish() {
 
         String dishName = "emptyDish";
         DishRequest newDishRequest = DishRequest.builder().name(dishName).build();
@@ -55,7 +55,7 @@ public class DishServiceITest extends AbstractApplicationIntegrationTest {
     }
 
     @Test
-    public void testCreateSameDish(){
+    public void testCreateSameDish() {
 
         String dishName = "sameDish";
         DishRequest newDish = DishRequest.builder().name(dishName).build();
@@ -75,7 +75,7 @@ public class DishServiceITest extends AbstractApplicationIntegrationTest {
     }
 
     @Test
-    public void testCreateDishWithMultipleFood(){
+    public void testCreateDishWithMultipleFood() {
 
         String dishName = "with1Food";
 
@@ -117,7 +117,7 @@ public class DishServiceITest extends AbstractApplicationIntegrationTest {
     }
 
     @Test
-    public void testCreateDishFoodWithPortion(){
+    public void testCreateDishFoodWithPortion() {
 
         String dishName = "withPortions";
 
@@ -143,7 +143,7 @@ public class DishServiceITest extends AbstractApplicationIntegrationTest {
                 )
                 .build();
 
-        ResponseEntity responseEntity = dishService.storeDish(newDish);
+        ResponseEntity<DishDto> responseEntity = dishService.storeDish(newDish);
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.CREATED.value());
 
         ResponseEntity<List<DishDto>> allDishes = dishService.getAllDishes();
@@ -160,9 +160,11 @@ public class DishServiceITest extends AbstractApplicationIntegrationTest {
         assertThat(ingredient1Food1.isPresent()).isTrue();
 
         assertThat(ingredient1Food1.get().getMultiplier()).isEqualTo(1.0);
-        assertThat(ingredient1Food1.get().getPortionId()).isEqualTo(food1Portion1.getId());
+        assertThat(ingredient1Food1.get().getPortion().getId()).isEqualTo(food1Portion1.getId());
         // check portion exists with food:
-        assertThat(ingredient1Food1.get().getFood().getPortions().stream().filter(p->p.getId().equals(ingredient1Food1.get().getPortionId())).findFirst().isPresent()).isTrue();
+        assertThat(ingredient1Food1.get().getFood().getPortions()
+                .stream()
+                .anyMatch(p -> p.getId().equals(ingredient1Food1.get().getPortion().getId()))).isTrue();
 
         responseEntity = dishService.deleteDish(matchedDish.get().getId());
 

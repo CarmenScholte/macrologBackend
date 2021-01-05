@@ -57,9 +57,13 @@ public class LogEntryService {
     @PostMapping(path = "/day/{date}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<LogEntryDto>> postEntries(
             @PathVariable("date") String date,
+            @RequestParam("meal") String meal,
             @RequestBody List<LogEntryRequest> entries) {
         UserInfo userInfo = ThreadLocalHolder.getThreadLocal().get();
-        List<LogEntry> existingEntries = logEntryRepository.getAllLogEntries(userInfo.getUserId(), LocalDateParser.parse(date));
+        List<LogEntry> existingEntries = logEntryRepository.getAllLogEntries(
+                userInfo.getUserId(),
+                LocalDateParser.parse(date),
+                meal);
         ModelMapper mapper = myModelMapper.getConfiguredMapper();
 
         // Delete old
@@ -75,7 +79,10 @@ public class LogEntryService {
             LogEntry entity = mapper.map(entry, LogEntry.class);
             logEntryRepository.saveLogEntry(userInfo.getUserId(), entity);
         }
-        List<LogEntry> allEntities = logEntryRepository.getAllLogEntries(userInfo.getUserId(), LocalDateParser.parse(date));
+        List<LogEntry> allEntities = logEntryRepository.getAllLogEntries(
+                userInfo.getUserId(),
+                LocalDateParser.parse(date),
+                meal);
         List<LogEntryDto> allEntries = allEntities.stream()
                 .map(entity -> mapper.map(entity, LogEntryDto.class))
                 .collect(Collectors.toList());
